@@ -71,6 +71,14 @@
             "Scalar.AspNetCore": {
               "target": "Package",
               "version": "[2.16.16, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[6.1.1, )"
             }
           },
           "imports": [
