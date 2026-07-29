@@ -55,7 +55,7 @@ public class GearShareDbContext : DbContext
         });
 
         //rentalrequest config
-        modelBuilder.Entity<RentalRequestResponseDto>(entity =>
+        modelBuilder.Entity<RentalRequest>(entity =>
         {
             entity.HasKey(r => r.Id);
 
