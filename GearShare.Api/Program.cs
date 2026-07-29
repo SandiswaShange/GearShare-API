@@ -1,6 +1,9 @@
 using GearShare.Api.Infrastructure;
 using Scalar.AspNetCore;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 //we loggin' this
 Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
@@ -12,6 +15,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
+
+//Part D
+var jwt = builder.Configuration.GetSection("Jwt");
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+
+            ValidIssuer = jwt["Issuer"],
+            ValidAudience = jwt["Audience"],
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwt["Key"]!))
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 //Added memory caching
 builder.Services.AddMemoryCache();
@@ -40,6 +66,9 @@ app.UseSerilogRequestLogging(options =>
 app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
+
+//add authentication
+app.UseAuthentication();
 
 app.UseAuthorization();
 
