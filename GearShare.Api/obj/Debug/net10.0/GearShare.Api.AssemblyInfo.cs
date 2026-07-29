@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GearShare.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44bd20133a4ca67dd5ece7443fe5be0bce3e3eb7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bdb1e3f8ce5c51278b2b6cad825fb0a114e4395")]
 [assembly: System.Reflection.AssemblyProductAttribute("GearShare.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GearShare.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

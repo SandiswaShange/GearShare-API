@@ -4,6 +4,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+//Added memory caching
+builder.Services.AddMemoryCache();
+
+
 // OpenAPI
 builder.Services.AddOpenApi();
 

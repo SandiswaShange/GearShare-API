@@ -1,5 +1,7 @@
 using GearShare.Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using GearShare.Api.DTOs;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace GearShare.Api.Controllers;
 
@@ -7,6 +9,14 @@ namespace GearShare.Api.Controllers;
 [Route("api/gear")]
 public class GearController : ControllerBase
 {
+
+//add memory caching
+    private readonly IMemoryCache _cache;
+    
+        public GearController(IMemoryCache cache)
+        {
+            _cache = cache;
+        }
     private static readonly List<GearItem> Gear =
     [
         new() { Id = 1, Title = "Camping Tent", Description = "4-person tent" },
@@ -44,5 +54,23 @@ public class GearController : ControllerBase
         await Task.CompletedTask;
 
         return Ok(Array.Empty<object>());
+    }
+
+//add a endpoint to creat a  rental request
+    [HttpPost("{gearItemId:int}/requests")]
+    public async Task<ActionResult<RentalRequestResponseDto>> CreateRentalRequest(
+        int gearItemId,
+        [FromBody] CreateRentalRequestDto dto,
+        [FromHeader(Name = "Idempotency-Key")] string? idempotencyKey)
+    {
+        await Task.CompletedTask;
+
+        // Validation
+        // Business rules
+        // Idempotency
+        // Mapping
+        // Return Created(...)
+
+        return StatusCode(StatusCodes.Status501NotImplemented);
     }
 }
