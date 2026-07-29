@@ -2,6 +2,8 @@ using GearShare.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using GearShare.Api.DTOs;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace GearShare.Api.Controllers;
 
@@ -22,7 +24,7 @@ public class GearController : ControllerBase
         new() { Id = 1, Title = "Camping Tent", Description = "4-person tent" },
         new() { Id = 2, Title = "Kayak", Description = "Single-person kayak" }
     ];
-
+// ================================================= HTTPGETS ================================================= 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GearItem>>> GetAll()
     {
@@ -48,6 +50,7 @@ public class GearController : ControllerBase
         return Ok(item);
     }
 
+    [Authorize]
     [HttpGet("{id:int}/requests")]
     public async Task<ActionResult<IEnumerable<object>>> GetRequests(int id)
     {
@@ -55,7 +58,9 @@ public class GearController : ControllerBase
 
         return Ok(Array.Empty<object>());
     }
+// ================================================= END HTTPGETS ================================================= 
 
+// ================================================= HTTPPOSTS ================================================= 
 //add a endpoint to creat a  rental request
     [HttpPost("{gearItemId:int}/requests")]
     public async Task<ActionResult<RentalRequestResponseDto>> CreateRentalRequest(
@@ -73,4 +78,33 @@ public class GearController : ControllerBase
 
         return StatusCode(StatusCodes.Status501NotImplemented);
     }
+// ================================================= END HTTPPOSTS ================================================= 
+
+// ================================================= HTTPPATCHS ================================================= 
+    [Authorize(Roles = "Admin")]
+    [HttpPatch("{id:int}/retire")]
+    public async Task<IActionResult> RetireGear(int id)
+    {
+        await Task.CompletedTask;
+        // TODO:
+        // Find gear item
+        // Set Status = Retired
+
+        return NoContent();
+    }
+
+    [Authorize]
+    [HttpPatch("{id:int}/maintenance")]
+    public async Task<IActionResult> MarkUnderMaintenance(int id)
+    {
+        await Task.CompletedTask;
+
+        // TODO:
+        // Find gear
+        // Verify current user owns it OR is Admin
+        // Set Status = UnderMaintenance
+
+        return NoContent();
+    }
+// ================================================= END HTTPPATCHS ================================================= 
 }
