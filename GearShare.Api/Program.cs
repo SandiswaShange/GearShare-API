@@ -4,6 +4,8 @@ using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GearShare.Api.Data;
+using Microsoft.EntityFrameworkCore;
 
 //we loggin' this
 Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
@@ -45,6 +47,9 @@ builder.Services.AddMemoryCache();
 //Exception handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+//DbContext
+builder.Services.AddDbContext<GearShareDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // OpenAPI
 builder.Services.AddOpenApi();
