@@ -17,4 +17,6 @@ public class GearItem
     public GearStatus Status { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    public User Owner { get; set; } = null!;
+    public ICollection<RentalRequest> RentalRequests { get; set; } = new List<RentalRequest>();
 }

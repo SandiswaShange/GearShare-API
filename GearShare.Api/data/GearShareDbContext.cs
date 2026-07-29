@@ -51,7 +51,7 @@ public class GearShareDbContext : DbContext
 
             entity.Property(g => g.CreatedAt).IsRequired();
 
-            entity.HasOne<User>().WithMany().HasForeignKey(g => g.OwnerId).OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne(g => g.Owner).WithMany(u => u.GearItems).HasForeignKey(g => g.OwnerId).OnDelete(DeleteBehavior.Restrict);
         });
 
         //rentalrequest config
@@ -71,7 +71,7 @@ public class GearShareDbContext : DbContext
 
             entity.Property(r => r.RequestedAt).IsRequired();
 
-            entity.HasOne<GearItem>().WithMany().HasForeignKey(r => r.GearItemId).OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(r => r.GearItem).WithMany(g => g.RentalRequests).HasForeignKey(r => r.GearItemId).OnDelete(DeleteBehavior.Cascade);
         });
     }
 }
